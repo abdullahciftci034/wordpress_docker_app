@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - mysql_app:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: abdullah123
+      MYSQL_DATABASE: blog
+      MYSQL_USER: abdullah
+      MYSQL_PASSWORD: abdullah123
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: abdullah
+      WORDPRESS_DB_PASSWORD: abdullah123
+      WORDPRESS_DB_NAME: blog
+    volumes:
+      - wordpress_app:/var/www/html
+volumes:
+  mysql_app:
+  wordpress_app:
